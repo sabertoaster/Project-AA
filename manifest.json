@@ -1,0 +1,24 @@
+{
+    "name": "AzotaAmazing",
+    "description": "Search stuff automatically!?",
+    "version": "1.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/assets/icon16.png",
+        "48": "/assets/icon48.png",
+        "128": "/assets/icon128.png"
+    },
+    "content_scripts": [{
+        "matches": ["https://azota.vn/en/test/take-test/*"],
+        "css": ["style.css"],
+        "js": ["jquery-3.6.0.js", "content.js"]
+    }],
+    "permissions": [
+        "activeTab",
+        "unlimitedStorage",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
