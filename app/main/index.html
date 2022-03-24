@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        
-        .toggleSlide{
+        .selected {
+            transition: .5s;
+            border-bottom: 0.1rem solid black;
+            display: inline-block;
+        }
+
+        #input>* {
+            width: 100%;
+        }
+
+        .toggleSlide {
+            transition: .5s;
             font-size: medium;
         }
-        .panelSlide{
+
+        .panelSlide {
             display: none;
         }
     </style>
 </head>
+
 <body>
-    <button id="clickMe">click me</button>
+    <div id="#input">
+        <button id="clickMe">click me to reveal the answer</button>
+        <input id="keyInput" placeholder="fill in me the API key">
+        <div>Current API key: <div style="display: inline;" id="displayKey"></div></div>
+    </div>
     <script src="jquery-3.6.0.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

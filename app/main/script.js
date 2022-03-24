@@ -1,4 +1,16 @@
 document.getElementById("clickMe").addEventListener("click", getClicked);
+document.getElementById("keyInput").addEventListener("click", getKeyInput);
+let displayKey;
+chrome.storage.local.get(['receivedKey']).then((content) => {
+    displayKey = content.receivedKey;
+    if (displayKey != "") {
+        $("#displayKey").text(displayKey);
+    }
+});
+$("#keyInput").blur(function (e) {
+    e.preventDefault();
+    getKeyInput();
+});
 async function getClicked() {
     let body = $("body");
     let newTitle, newLink, newQuestion;
@@ -11,6 +23,15 @@ async function getClicked() {
     await chrome.storage.local.get(["links"]).then((content) => {
         newLink = content.links;
     });
+
+    if (newQuestion == undefined || newQuestion.length == 0) {
+        alert("U haven't access Azota, access Azota tests then comeback here");
+    }
+    if (newQuestion.length != newTitle.length) {
+        alert("The key is corrupted or out of order / The ")
+    }
+
+    console.log(newQuestion, newTitle, newLink);
     for (let i = 0; i < newQuestion.length; i++) {
         body.append(`<div class="toggleSlide">Câu ${i+1}: ${newQuestion[i]}</div><div class="panelSlide"></div>`);
     }
@@ -44,6 +65,7 @@ async function getClicked() {
     //     }
     // }
     $(".toggleSlide").click(function () {
+        $(this).toggleClass("selected");
         $(this).next().slideToggle();
     });
 }
@@ -51,4 +73,16 @@ async function getClicked() {
 function getDomainName(url) {
     url = new URL(url);
     return url.hostname;
+}
+
+function getKeyInput() {
+    var val = $("#keyInput").val()
+    console.log(val);
+    if (val != "" || val != undefined || val != null) {
+        $("#displayKey").text(val);
+        chrome.storage.local.set({
+            "receivedKey": val
+        });
+
+    }
 }

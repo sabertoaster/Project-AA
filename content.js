@@ -1,11 +1,14 @@
 let totalLink = [];
 let totalTitle = [];
-
-let apiKey = "AIzaSyAEupfbnfDuXT35lvOdzJ8tlXLrT7X0Egk";
+let apiKey;
 let panelID = "41f196f7d3f22e0d7";
 
 
-var x = setInterval(() => {
+var x = setInterval(async () => {
+  await chrome.storage.local.get(['receivedKey']).then((content) => {
+    apiKey = content.receivedKey;
+    console.log(apiKey);
+  });
   let content = document.querySelectorAll(".content-img");
   let passaway = document.querySelector("#question_ui");
   let data = [];
@@ -16,13 +19,12 @@ var x = setInterval(() => {
     }
     searchContent(data);
     // console.log(data);
-    console.log(totalLink);
-    console.log(totalTitle);
     chrome.storage.local.set({
       "question": data,
       "links": totalLink,
       "title": totalTitle
     });
+    console.log(data, totalLink, totalTitle)
     clearInterval(x);
   }
 
@@ -47,8 +49,6 @@ function subContent(query) {
         tempLink.push(data.items[i].link);
         tempTitle.push(data.items[i].title);
       }
-      console.log(tempLink);
-      console.log(tempTitle);
       totalLink.push(tempLink);
       totalTitle.push(tempTitle);
     },
